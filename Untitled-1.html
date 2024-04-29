@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Camera Access</title>
+</head>
+<body>
+<h1>Camera Access</h1>
+<div>
+  <label for="cameraSelect">Select Camera:</label>
+  <select id="cameraSelect" onchange="changeCamera()">
+    <option value="environment">Back Camera</option>
+    <option value="user">Front Camera</option>
+  </select>
+</div>
+<div id="video-container">
+  <video id="video-element" autoplay playsinline></video>
+</div>
+
+<script>
+function changeCamera() {
+  const selectedCamera = document.getElementById('cameraSelect').value;
+
+  
+  navigator.mediaDevices.getUserMedia({ video: { facingMode: selectedCamera } })
+    .then(stream => {
+      const videoElement = document.getElementById('video-element');
+      videoElement.srcObject = stream;
+    })
+    .catch(error => {
+      console.error('Error accessing camera:', error);
+    });
+}
+changeCamera(); // Call the function initially to start with the default camera
+</script>
+</body>
+</html>
